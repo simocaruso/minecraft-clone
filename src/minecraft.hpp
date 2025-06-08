@@ -9,6 +9,8 @@
 #include <vector>
 #include <map>
 #include "systems/system.hpp"
+#include "entt/entt.hpp"
+#include "world.hpp"
 
 class Minecraft {
 public:
@@ -16,6 +18,8 @@ public:
 
 private:
     std::map<SystemType, std::unique_ptr<System>> systems;
+    entt::registry registry;
+    World world = World(registry);
 
     void run_game_loop();
 

@@ -35,5 +35,5 @@ void Minecraft::run_game_loop() {
 }
 
 void Minecraft::init_systems() {
-    systems[RENDERING] = std::make_unique<RenderingSystem>();
+    systems[RENDERING] = std::make_unique<RenderingSystem>(registry);
 }

@@ -8,16 +8,18 @@
 
 #include <GLFW/glfw3.h>
 #include "system.hpp"
+#include "shader.hpp"
 
 class RenderingSystem : public System {
 public:
-    RenderingSystem();
+    explicit RenderingSystem(entt::registry &registry);
 
     void update(int elapsed) override;
 
 private:
     GLFWwindow *window = nullptr;
-
+    Shader shader = Shader("vtx", "frag");
+    int angle = 0;
     void init_window();
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
