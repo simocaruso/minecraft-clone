@@ -17,9 +17,8 @@ public:
     void update(int elapsed) override;
 
 private:
-    GLFWwindow *window = nullptr;
     Shader shader = Shader("vtx", "frag");
-    int angle = 0;
+
     void init_window();
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);

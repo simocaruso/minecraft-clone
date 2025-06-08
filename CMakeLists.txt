@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD 17)
 # Create GLAD as a static library from glad.c
 add_library(glad STATIC include/glad.c
         src/components/TransformComponent.hpp
+        src/components/InputComponent.hpp
+        src/components/CameraComponent.hpp
 )
 target_include_directories(glad PUBLIC include)
 
@@ -25,7 +27,11 @@ add_executable(minecraft src/main.cpp
         src/file_manager.cpp
         src/file_manager.hpp
         src/systems/shader.cpp
-        src/systems/shader.hpp)
+        src/systems/shader.hpp
+        src/systems/input_system.cpp
+        src/systems/input_system.hpp
+        src/systems/camera_system.cpp
+        src/systems/camera_system.hpp)
 
 add_custom_target(
         CopyShader ALL

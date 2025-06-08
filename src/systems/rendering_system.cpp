@@ -6,12 +6,10 @@
 #include <GLFW/glfw3.h>
 #include "rendering_system.hpp"
 #include "../components/TransformComponent.hpp"
+#include "../components/CameraComponent.hpp"
 #include <iostream>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#define WIDTH 800
-#define HEIGHT 600
 
 RenderingSystem::RenderingSystem(entt::registry &registry) : System(registry) {
     init_window();
@@ -23,7 +21,7 @@ void RenderingSystem::init_window() {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    window = glfwCreateWindow(WIDTH, HEIGHT, "Minecraft", NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Minecraft", NULL, NULL);
     if (window == nullptr) {
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -34,6 +32,7 @@ void RenderingSystem::init_window() {
         std::cout << "Failed to initialize GLAD" << std::endl;
     }
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+    registry.ctx().emplace<GLFWwindow*>(window);
     glEnable(GL_DEPTH_TEST);
 }
 
@@ -103,10 +102,8 @@ void RenderingSystem::update(int elapsed) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.use();
-    auto view = glm::mat4(1.0f);
     auto projection = glm::mat4(1.0f);
-    angle += elapsed;
-    view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+    auto view = registry.get<CameraComponent>(*registry.view<CameraComponent>().begin()).view;
     projection = glm::perspective(glm::radians(45.0f), (float) WIDTH / (float) HEIGHT, 0.1f, 100.0f);
     shader.setMat4("view", view);
     shader.setMat4("projection", projection);
@@ -126,6 +123,6 @@ void RenderingSystem::update(int elapsed) {
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
-    glfwSwapBuffers(window);
+    glfwSwapBuffers(registry.ctx().get<GLFWwindow*>());
     glfwPollEvents();
 }

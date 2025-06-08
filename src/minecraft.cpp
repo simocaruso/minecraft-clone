@@ -7,6 +7,8 @@
 #include "timer.hpp"
 #include "iostream"
 #include "systems/rendering_system.hpp"
+#include "systems/input_system.hpp"
+#include "systems/camera_system.hpp"
 
 void Minecraft::start() {
     init_systems();
@@ -35,5 +37,9 @@ void Minecraft::run_game_loop() {
 }
 
 void Minecraft::init_systems() {
+    systems[INPUT] = std::make_unique<InputSystem>(registry);
+    systems[CAMERA] = std::make_unique<CameraSystem>(registry);
     systems[RENDERING] = std::make_unique<RenderingSystem>(registry);
+
+    systems[INPUT]->init();
 }
