@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.26)
 project(minecraft)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 # Create GLAD as a static library from glad.c
 add_library(glad STATIC include/glad.c
         src/components/TransformComponent.hpp
         src/components/InputComponent.hpp
         src/components/CameraComponent.hpp
+        src/components/RederingComponent.hpp
 )
 target_include_directories(glad PUBLIC include)
 
@@ -22,8 +23,8 @@ add_executable(minecraft src/main.cpp
         src/systems/system.hpp
         src/systems/rendering_system.cpp
         src/systems/rendering_system.hpp
-        src/world.cpp
-        src/world.hpp
+        src/world/world.cpp
+        src/world/world.hpp
         src/file_manager.cpp
         src/file_manager.hpp
         src/systems/shader.cpp
@@ -31,7 +32,11 @@ add_executable(minecraft src/main.cpp
         src/systems/input_system.cpp
         src/systems/input_system.hpp
         src/systems/camera_system.cpp
-        src/systems/camera_system.hpp)
+        src/systems/camera_system.hpp
+        src/world/chunk.cpp
+        src/world/chunk.hpp
+        src/mesh.cpp
+        src/mesh.hpp)
 
 add_custom_target(
         CopyShader ALL

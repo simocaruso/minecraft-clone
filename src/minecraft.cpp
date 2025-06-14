@@ -17,7 +17,7 @@ void Minecraft::start() {
 
 void Minecraft::run_game_loop() {
     Timer frame_time;
-    const int FPS = 30;
+    const int FPS = 60;
     int frame_duration = 1000 / FPS;
     int elapsed;
     for (;;) {
@@ -27,6 +27,7 @@ void Minecraft::run_game_loop() {
 
         for (auto &sys: systems) {
             sys.second->update(elapsed);
+            std::cout << "Processing " << sys.first << ". Elapsed time: " << frame_time.elapsed() << std::endl;
         }
 
         if (frame_time.elapsed() < frame_duration) {

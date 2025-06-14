@@ -6,13 +6,16 @@
 #define MINECRAFT_WORLD_HPP
 
 #include "entt/entt.hpp"
+#include "chunk.hpp"
 
 class World {
 public:
     explicit World(entt::registry &registry);
+
 private:
     entt::registry &registry;
-    void create();
+
+    void generate();
 };
 
 

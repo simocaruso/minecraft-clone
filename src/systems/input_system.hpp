@@ -12,8 +12,6 @@ class InputSystem : public System {
     void init() override;
 
 public:
-    static float last_mouse_x;
-    static float last_mouse_y;
     static float x_offset;
     static float y_offset;
 

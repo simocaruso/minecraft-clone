@@ -10,7 +10,7 @@
 #include <map>
 #include "systems/system.hpp"
 #include "entt/entt.hpp"
-#include "world.hpp"
+#include "world/world.hpp"
 
 class Minecraft {
 public:

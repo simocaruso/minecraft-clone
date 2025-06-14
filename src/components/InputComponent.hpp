@@ -15,6 +15,9 @@ struct InputComponent {
 
     float look_delta_x = 0.0f;
     float look_delta_y = 0.0f;
+
+    // Debug options
+    bool toggle_input_render = false;
 };
 
 #endif //MINECRAFT_INPUTCOMPONENT_HPP

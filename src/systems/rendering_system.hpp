@@ -9,6 +9,7 @@
 #include <GLFW/glfw3.h>
 #include "system.hpp"
 #include "shader.hpp"
+#include "../timer.hpp"
 
 class RenderingSystem : public System {
 public:
@@ -18,10 +19,13 @@ public:
 
 private:
     Shader shader = Shader("vtx", "frag");
+    Timer toggled_render_mode;
 
     void init_window();
 
     static void framebuffer_size_callback(GLFWwindow *window, int width, int height);
+
+    void toggle_render_mode();
 };
 
 
