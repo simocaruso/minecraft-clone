@@ -40,6 +40,8 @@ void Shader::init() {
     use();
     auto projection = glm::perspective(glm::radians(45.0f), (float) WIDTH / (float) HEIGHT, 0.1f, 100.0f);
     setMat4("projection", projection);
+    glEnable(GL_CULL_FACE);          // Enable face culling
+    glCullFace(GL_BACK);             // Cull back faces
 }
 
 void Shader::use() const {
