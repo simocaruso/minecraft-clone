@@ -2,9 +2,13 @@
 // Created by simone on 08/06/25.
 //
 
+#include <iostream>
 #include "glad/glad.h"
 #include "shader.hpp"
 #include "../file_manager.hpp"
+#include "../atlas.hpp"
+#include "glm/ext/matrix_clip_space.hpp"
+#include "system.hpp"
 
 Shader::Shader(const std::string &vtx, const std::string &frag) {
     vtx_source = FileManager::load_text_file("shader", vtx, "glsl");
@@ -31,6 +35,11 @@ void Shader::init() {
 
     glDeleteShader(vtx_shader);
     glDeleteShader(frag_shader);
+
+    load_atlas();
+    use();
+    auto projection = glm::perspective(glm::radians(45.0f), (float) WIDTH / (float) HEIGHT, 0.1f, 100.0f);
+    setMat4("projection", projection);
 }
 
 void Shader::use() const {
@@ -83,4 +92,16 @@ void Shader::setMat3(const std::string &name, const glm::mat3 &mat) const {
 
 void Shader::setMat4(const std::string &name, const glm::mat4 &mat) const {
     glUniformMatrix4fv(glGetUniformLocation(program, name.c_str()), 1, GL_FALSE, &mat[0][0]);
+}
+
+void Shader::load_atlas() {
+    AtlasLoader atlas_loader;
+    atlas_loader.load();
+    glGenTextures(1, &atlas);
+    glBindTexture(GL_TEXTURE_2D, atlas);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, atlas_loader.width, atlas_loader.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, atlas_loader.data);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    atlas_loader.free();
 }

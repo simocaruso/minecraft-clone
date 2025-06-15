@@ -4,26 +4,7 @@
 
 #include <stdexcept>
 #include "chunk.hpp"
-
-const std::vector<float> CUBE_VERTICES = {
-        0, 0, 0,
-        1, 0, 0,
-        1, 1, 0,
-        0, 1, 0,
-
-        0, 0, 1,
-        1, 0, 1,
-        1, 1, 1,
-        0, 1, 1
-};
-const std::vector<int> CUBE_INDICES = {
-        1, 0, 3, 1, 3, 2, // north (-z)
-        4, 5, 6, 4, 6, 7, // south (+z)
-        5, 1, 2, 5, 2, 6, // east (+x)
-        0, 4, 7, 0, 7, 3, // west (-x)
-        2, 3, 7, 2, 7, 6, // top (+y)
-        5, 4, 0, 5, 0, 1, // bottom (-y)
-};
+#include "../block.hpp"
 
 Chunk::Chunk() {
     generate();
@@ -39,7 +20,6 @@ void Chunk::generate() {
     }
 
 }
-
 
 Mesh Chunk::get_mesh() {
     if (!dirty) {
@@ -61,20 +41,40 @@ Mesh Chunk::get_mesh() {
         }
         for (int y = min_near_y; y < cell.second + 1; y++) {
             for (int i = 0; i < CUBE_INDICES.size(); i += 3) {
-                mesh.add_triangle({CUBE_VERTICES[CUBE_INDICES[i] * 3] + cell.first.first,
-                                   CUBE_VERTICES[CUBE_INDICES[i] * 3 + 1] + y,
-                                   CUBE_VERTICES[CUBE_INDICES[i] * 3 + 2] + cell.first.second},
-                                  {CUBE_VERTICES[CUBE_INDICES[i + 1] * 3] + cell.first.first,
-                                   CUBE_VERTICES[CUBE_INDICES[i + 1] * 3 + 1] + y,
-                                   CUBE_VERTICES[CUBE_INDICES[i + 1] * 3 + 2] + cell.first.second},
-                                  {CUBE_VERTICES[CUBE_INDICES[i + 2] * 3] + cell.first.first,
-                                   CUBE_VERTICES[CUBE_INDICES[i + 2] * 3 + 1] + y,
-                                   CUBE_VERTICES[CUBE_INDICES[i + 2] * 3 + 2] + cell.first.second}
+                mesh.add_triangle({VertexData{CUBE_VERTICES[CUBE_INDICES[i] * 8] + cell.first.first,
+                                              CUBE_VERTICES[CUBE_INDICES[i] * 8 + 1] + y,
+                                              CUBE_VERTICES[CUBE_INDICES[i] * 8 + 2] + cell.first.second,
+                                              CUBE_VERTICES[CUBE_INDICES[i] * 8 + 3],
+                                              CUBE_VERTICES[CUBE_INDICES[i] * 8 + 4],
+                                              CUBE_VERTICES[CUBE_INDICES[i] * 8 + 5],
+                                              CUBE_VERTICES[CUBE_INDICES[i] * 8 + 6],
+                                              CUBE_VERTICES[CUBE_INDICES[i] * 8 + 7]}
+                                  },
+                                  {VertexData{CUBE_VERTICES[CUBE_INDICES[i + 1] * 8] + cell.first.first,
+                                              CUBE_VERTICES[CUBE_INDICES[i + 1] * 8 + 1] + y,
+                                              CUBE_VERTICES[CUBE_INDICES[i + 1] * 8 + 2] + cell.first.second,
+                                              CUBE_VERTICES[CUBE_INDICES[i + 1] * 8 + 3],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 1] * 8 + 4],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 1] * 8 + 5],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 1] * 8 + 6],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 1] * 8 + 7]}
+                                  },
+                                  {VertexData{CUBE_VERTICES[CUBE_INDICES[i + 2] * 8] + cell.first.first,
+                                              CUBE_VERTICES[CUBE_INDICES[i + 2] * 8 + 1] + y,
+                                              CUBE_VERTICES[CUBE_INDICES[i + 2] * 8 + 2] + cell.first.second,
+                                              CUBE_VERTICES[CUBE_INDICES[i + 2] * 8 + 3],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 2] * 8 + 4],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 2] * 8 + 5],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 2] * 8 + 6],
+                                              CUBE_VERTICES[CUBE_INDICES[i + 2] * 8 + 7]}
+                                  }
                 );
             }
         }
     }
+
     dirty = false;
-    return mesh;
+    return
+            mesh;
 }
 

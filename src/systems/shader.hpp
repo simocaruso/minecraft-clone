@@ -43,9 +43,12 @@ public:
 
 private:
     unsigned int program{};
+    unsigned int atlas{};
     std::string vtx_source;
 
     std::string frag_source;
+
+    void load_atlas();
 };
 
 

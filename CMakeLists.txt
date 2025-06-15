@@ -36,7 +36,10 @@ add_executable(minecraft src/main.cpp
         src/world/chunk.cpp
         src/world/chunk.hpp
         src/mesh.cpp
-        src/mesh.hpp)
+        src/mesh.hpp
+        src/atlas.cpp
+        src/atlas.hpp
+        src/block.hpp)
 
 add_custom_target(
         CopyShader ALL
@@ -44,7 +47,18 @@ add_custom_target(
         ${CMAKE_SOURCE_DIR}/shader ./shader
         COMMENT "Copying shader directory to output"
 )
+
 add_dependencies(${PROJECT_NAME} CopyShader)
+
+
+add_custom_target(
+        CopyRes ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/res ./res
+        COMMENT "Copying res directory to output"
+)
+
+add_dependencies(${PROJECT_NAME} CopyRes)
 
 target_include_directories(minecraft PRIVATE
         include
