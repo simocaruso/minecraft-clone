@@ -12,6 +12,7 @@
 
 void Minecraft::start() {
     init_systems();
+    world.generate();
     run_game_loop();
 }
 

@@ -7,12 +7,11 @@
 #include "../components/RederingComponent.hpp"
 
 World::World(entt::registry &registry) : registry(registry) {
-    generate();
 }
 
 void World::generate() {
-    for (int x = 0; x < 3; x ++) {
-        for (int z = 0; z < 3; z++) {
+    for (int x = 0; x < CHUNK_DISTANCE; x ++) {
+        for (int z = 0; z < CHUNK_DISTANCE; z++) {
             Chunk chunk;
             auto entity = registry.create();
             auto &transform_component = registry.emplace<TransformComponent>(entity);

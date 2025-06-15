@@ -5,6 +5,8 @@
 #ifndef MINECRAFT_BLOCK_HPP
 #define MINECRAFT_BLOCK_HPP
 
+#define VERTEX_DATA_SIZE 8
+
 const std::vector<float> CUBE_VERTICES = {
 // Back face (-Z)
         -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   0.0f, 0.0f,

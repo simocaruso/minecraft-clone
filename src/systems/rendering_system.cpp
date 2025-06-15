@@ -10,7 +10,6 @@
 #include "../components/RederingComponent.hpp"
 #include "../components/InputComponent.hpp"
 #include <iostream>
-#include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 RenderingSystem::RenderingSystem(entt::registry &registry) : System(registry) {
@@ -25,7 +24,7 @@ void RenderingSystem::init_window() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Minecraft", NULL, NULL);
     if (window == nullptr) {
-        std::cout << "Failed to generate GLFW window" << std::endl;
+        std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
     }
     glfwMakeContextCurrent(window);
@@ -65,39 +64,13 @@ void RenderingSystem::update(int elapsed) {
 
     shader.use();
     shader.setMat4("view", registry.get<CameraComponent>(*registry.view<CameraComponent>().begin()).view);
-    unsigned int VBO, VAO, EBO;
-    glGenVertexArrays(1, &VAO);
-    glGenBuffers(1, &VBO);
-    glGenBuffers(1, &EBO);
     for (auto cube: registry.view<TransformComponent>()) {
         auto &mesh = registry.get<RenderingComponent>(cube).mesh;
-        glBindVertexArray(VAO);
-
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, mesh.get_vertexes().size() * sizeof(float), mesh.get_vertexes().data(),
-                     GL_STATIC_DRAW);
-
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.get_indexes().size() * sizeof(int), mesh.get_indexes().data(),
-                     GL_STATIC_DRAW);
-        // position
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), 0);
-        glEnableVertexAttribArray(0);
-        // normal
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
-        // uv
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void *) (6 * sizeof(float)));
-        glEnableVertexAttribArray(2);
-
-        glBindVertexArray(VAO);
+        glBindVertexArray(mesh.get_VAO());
         auto model = glm::translate(glm::mat4(1.0f), registry.get<TransformComponent>(cube).position);
         shader.setMat4("model", model);
-        glDrawElements(GL_TRIANGLES, mesh.get_indexes().size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, mesh.get_size(), GL_UNSIGNED_INT, 0);
     }
-    glDeleteVertexArrays(1, &VAO);
-    glDeleteBuffers(1, &VBO);
-    glDeleteBuffers(1, &EBO);
 
     glfwSwapBuffers(registry.ctx().get<GLFWwindow *>());
     glfwPollEvents();

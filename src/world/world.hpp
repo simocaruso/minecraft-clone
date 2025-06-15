@@ -12,10 +12,11 @@ class World {
 public:
     explicit World(entt::registry &registry);
 
+    void generate();
 private:
     entt::registry &registry;
 
-    void generate();
+    const int CHUNK_DISTANCE = 5;
 };
 
 

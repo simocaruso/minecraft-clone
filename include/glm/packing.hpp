@@ -77,7 +77,7 @@ namespace glm
 	GLM_FUNC_DECL uint packSnorm4x8(vec4 const& v);
 
 	/// First, unpacks a single 32-bit unsigned integer p into a pair of 16-bit unsigned integers, four 8-bit unsigned integers, or four 8-bit signed integers.
-	/// Then, each component is converted to a normalized floating-point value to generate the returned two- or four-component vector.
+	/// Then, each component is converted to a normalized floating-point value to create the returned two- or four-component vector.
 	///
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackUnorm2x16: f / 65535.0
@@ -90,7 +90,7 @@ namespace glm
 	GLM_FUNC_DECL vec2 unpackUnorm2x16(uint p);
 
 	/// First, unpacks a single 32-bit unsigned integer p into a pair of 16-bit unsigned integers, four 8-bit unsigned integers, or four 8-bit signed integers.
-	/// Then, each component is converted to a normalized floating-point value to generate the returned two- or four-component vector.
+	/// Then, each component is converted to a normalized floating-point value to create the returned two- or four-component vector.
 	///
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackSnorm2x16: clamp(f / 32767.0, -1, +1)
@@ -103,7 +103,7 @@ namespace glm
 	GLM_FUNC_DECL vec2 unpackSnorm2x16(uint p);
 
 	/// First, unpacks a single 32-bit unsigned integer p into a pair of 16-bit unsigned integers, four 8-bit unsigned integers, or four 8-bit signed integers.
-	/// Then, each component is converted to a normalized floating-point value to generate the returned two- or four-component vector.
+	/// Then, each component is converted to a normalized floating-point value to create the returned two- or four-component vector.
 	///
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackUnorm4x8: f / 255.0
@@ -116,7 +116,7 @@ namespace glm
 	GLM_FUNC_DECL vec4 unpackUnorm4x8(uint p);
 
 	/// First, unpacks a single 32-bit unsigned integer p into a pair of 16-bit unsigned integers, four 8-bit unsigned integers, or four 8-bit signed integers.
-	/// Then, each component is converted to a normalized floating-point value to generate the returned two- or four-component vector.
+	/// Then, each component is converted to a normalized floating-point value to create the returned two- or four-component vector.
 	///
 	/// The conversion for unpacked fixed-point value f to floating point is done as follows:
 	/// unpackSnorm4x8: clamp(f / 127.0, -1, +1)

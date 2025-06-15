@@ -18,14 +18,27 @@ public:
 
     void add_triangle(VertexData vertex_1, VertexData vertex_2, VertexData vertex_3);
 
-    std::vector<float> get_vertexes();
+    void create();
 
-    std::vector<int> get_indexes();
+    void clear();
+
+    unsigned int get_VAO() const;
+
+    int get_size();
 
 private:
+
+    unsigned int VBO, VAO, EBO;
     std::vector<VertexData> vertexes;
     std::unordered_map<VertexData, int> vertex_idx;
     std::vector<std::array<int, 3>> triangles;
+    std::vector<float> cache_gpu_shaped_vertexes;
+    std::vector<int> cache_gpu_shaped_indexes;
+
+    std::vector<int> get_indexes();
+
+    std::vector<float> get_vertexes();
+
 };
 
 

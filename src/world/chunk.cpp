@@ -2,9 +2,7 @@
 // Created by simone on 10/06/25.
 //
 
-#include <stdexcept>
 #include "chunk.hpp"
-#include "../block.hpp"
 
 Chunk::Chunk() {
     generate();
@@ -25,6 +23,7 @@ Mesh Chunk::get_mesh() {
     if (!dirty) {
         return mesh;
     }
+    mesh.clear();
     for (auto cell: height_map) {
         int min_near_y = cell.second;
         if (height_map.contains({cell.first.first - 1, cell.first.second})) {
@@ -40,7 +39,7 @@ Mesh Chunk::get_mesh() {
             min_near_y = std::min(min_near_y, height_map[std::make_pair(cell.first.first, cell.first.second + 1)]);
         }
         for (int y = min_near_y; y < cell.second + 1; y++) {
-            for (int i = 0; i < CUBE_VERTICES.size(); i += 24) {
+            for (int i = 0; i < CUBE_VERTICES.size(); i += VERTEX_DATA_SIZE * 3) {
                 mesh.add_triangle({VertexData{CUBE_VERTICES[i] + cell.first.first,
                                               CUBE_VERTICES[i + 1] + y,
                                               CUBE_VERTICES[i + 2] + cell.first.second,
@@ -72,7 +71,7 @@ Mesh Chunk::get_mesh() {
             }
         }
     }
-
+    mesh.create();
     dirty = false;
     return mesh;
 }
