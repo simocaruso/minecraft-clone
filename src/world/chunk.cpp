@@ -2,6 +2,7 @@
 // Created by simone on 10/06/25.
 //
 
+#include <iostream>
 #include "chunk.hpp"
 
 Chunk::Chunk() {
@@ -9,14 +10,12 @@ Chunk::Chunk() {
 }
 
 void Chunk::generate() {
+    srandom(time(nullptr));
     for (int x = 0; x < SIZE; x++) {
-        for (int y = 0; y < MAX_HEIGHT; y++) {
-            for (int z = 0; z < SIZE; z++) {
-                height_map[std::make_pair(x, z)] = rand() % MAX_HEIGHT + (int) MAX_HEIGHT / 2;
-            }
+        for (int z = 0; z < SIZE; z++) {
+            height_map[std::make_pair(x, z)] = random() % MAX_HEIGHT;
         }
     }
-
 }
 
 Mesh Chunk::get_mesh() {

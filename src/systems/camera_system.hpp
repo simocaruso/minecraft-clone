@@ -4,9 +4,6 @@
 
 #ifndef MINECRAFT_CAMERA_SYSTEM_HPP
 #define MINECRAFT_CAMERA_SYSTEM_HPP
-const float SPEED = 2.5f;
-const float SENSITIVITY = 0.1f;
-const float ZOOM = 45.0f;
 
 #include "system.hpp"
 #include "glm/glm.hpp"
@@ -25,7 +22,7 @@ private:
     glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f);
     float yaw = -90.0f;
     float pitch = 0.0f;
-    float movement_speed = 0.01f;
+    float movement_speed = 0.03f;
     float mouse_sensitivity = 0.2f;
 
     void process_input(int elapsed);

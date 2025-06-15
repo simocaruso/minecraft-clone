@@ -17,7 +17,7 @@ public:
 
 private:
     const int SIZE = 16;
-    const int MAX_HEIGHT = 10;
+    const int MAX_HEIGHT = 3;
     std::map<std::pair<int, int>, int> height_map;
     Mesh mesh;
     bool dirty = true;
