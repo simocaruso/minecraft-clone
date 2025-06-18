@@ -67,10 +67,14 @@ void Chunk::update_mesh(ChunkManager &chunk_manager) {
         auto x = coords.first;
         auto z = coords.second;
         for (int y = 0; y <= max_height; y++) {
-            if (y == max_height) {
+            if ((!chunk_manager.is_solid({in_world_position.x + x,
+                                          in_world_position.y + y + 1,
+                                          in_world_position.z + z})) ) {
                 add_face(TOP, mesh, x, y, z);
             }
-            if (y == 0) {
+            if (!chunk_manager.is_solid({in_world_position.x + x,
+                                         in_world_position.y + y - 1,
+                                         in_world_position.z + z})) {
                 add_face(BOTTOM, mesh, x, y, z);
             }
             if (!chunk_manager.is_solid({in_world_position.x + x + 1,
