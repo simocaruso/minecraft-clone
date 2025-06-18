@@ -39,7 +39,9 @@ add_executable(minecraft src/main.cpp
         src/mesh.hpp
         src/atlas.cpp
         src/atlas.hpp
-        src/block.hpp)
+        src/block.hpp
+        src/world/chunk_manager.cpp
+        src/world/chunk_manager.hpp)
 
 add_custom_target(
         CopyShader ALL

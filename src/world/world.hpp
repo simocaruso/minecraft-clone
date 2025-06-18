@@ -7,16 +7,19 @@
 
 #include "entt/entt.hpp"
 #include "chunk.hpp"
+#include "chunk_manager.hpp"
 
 class World {
 public:
     explicit World(entt::registry &registry);
 
     void generate();
-private:
-    entt::registry &registry;
 
-    const int CHUNK_DISTANCE = 5;
+private:
+    const int CHUNK_SIZE = 16;
+    const int CHUNK_DISTANCE = 10;
+    entt::registry &registry;
+    ChunkManager chunk_manager;
 };
 
 

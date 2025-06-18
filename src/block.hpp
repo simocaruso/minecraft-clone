@@ -7,6 +7,15 @@
 
 #define VERTEX_DATA_SIZE 8
 
+enum CUBE_FACE_IDX {
+    BACK,
+    FRONT,
+    LEFT,
+    RIGHT,
+    BOTTOM,
+    TOP
+};
+
 const std::vector<float> CUBE_VERTICES = {
 // Back face (-Z)
         -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, -1.0f,   0.0f, 0.0f,

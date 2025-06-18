@@ -59,7 +59,7 @@ void RenderingSystem::toggle_render_mode() {
 
 void RenderingSystem::update(int elapsed) {
     toggle_render_mode();
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.0f, .7f, .7f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     shader.use();

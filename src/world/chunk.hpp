@@ -8,21 +8,31 @@
 
 #include <map>
 #include "../mesh.hpp"
+#include "glm/vec2.hpp"
+#include "entt/entt.hpp"
+
+class ChunkManager;
 
 class Chunk {
 public:
-    Chunk();
+    Chunk(int size, glm::ivec3 in_world_position, entt::registry &registry);
 
-    Mesh get_mesh();
+    ~Chunk() = default;
+
+    void update_mesh(ChunkManager &chunk_manager);
+
+    bool is_solid(glm::ivec3 position);
 
 private:
-    const int SIZE = 16;
-    const int MAX_HEIGHT = 3;
+    int size = 0;
+    static const int MAX_HEIGHT = 5;
     std::map<std::pair<int, int>, int> height_map;
-    Mesh mesh;
-    bool dirty = true;
+    glm::ivec3 in_world_position;
+    entt::registry &registry;
+    entt::entity entity;
 
     void generate();
+
 };
 
 

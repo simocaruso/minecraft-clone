@@ -40,8 +40,8 @@ void Shader::init() {
     use();
     auto projection = glm::perspective(glm::radians(45.0f), (float) WIDTH / (float) HEIGHT, 0.1f, 100.0f);
     setMat4("projection", projection);
-    glEnable(GL_CULL_FACE);          // Enable face culling
-    glCullFace(GL_BACK);             // Cull back faces
+    glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 }
 
 void Shader::use() const {
@@ -103,7 +103,8 @@ void Shader::load_atlas() {
     glBindTexture(GL_TEXTURE_2D, atlas);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, atlas_loader.width, atlas_loader.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, atlas_loader.data);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, atlas_loader.width, atlas_loader.height, 0, GL_RGBA, GL_UNSIGNED_BYTE,
+                 atlas_loader.data);
     glGenerateMipmap(GL_TEXTURE_2D);
     atlas_loader.free();
 }
