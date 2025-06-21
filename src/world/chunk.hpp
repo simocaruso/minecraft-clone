@@ -19,13 +19,18 @@ public:
 
     ~Chunk() = default;
 
+    void destroy();
+
     void update_mesh(ChunkManager &chunk_manager);
+
+    void invalidate_mesh();
 
     bool is_solid(glm::ivec3 position);
 
 private:
     int size = 0;
     static const int MAX_HEIGHT = 5;
+    static const int MIN_HEIGHT = 0;
     std::map<std::pair<int, int>, int> height_map;
     glm::ivec3 in_world_position;
     entt::registry &registry;
@@ -33,6 +38,7 @@ private:
 
     void generate();
 
+    bool dirty_mesh = true;
 };
 
 

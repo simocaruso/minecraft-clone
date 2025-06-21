@@ -15,13 +15,10 @@ public:
     void update(int elapsed) override;
 
 private:
-    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
     glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 right{};
     glm::vec3 world_up = glm::vec3(0.0f, 1.0f, 0.0f);
-    float yaw = -90.0f;
-    float pitch = 0.0f;
     float movement_speed = 0.03f;
     float mouse_sensitivity = 0.2f;
 

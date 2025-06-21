@@ -31,6 +31,8 @@ void Minecraft::run_game_loop() {
             std::cout << "Processing " << sys.first << ". Elapsed time: " << frame_time.elapsed() << std::endl;
         }
 
+        world.update();
+
         if (frame_time.elapsed() < frame_duration) {
             std::this_thread::sleep_for(std::chrono::milliseconds(frame_duration - frame_time.elapsed()));
         }

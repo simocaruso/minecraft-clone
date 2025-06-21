@@ -15,9 +15,11 @@ public:
 
     void generate();
 
+    void update();
+
 private:
     const int CHUNK_SIZE = 16;
-    const int CHUNK_DISTANCE = 10;
+    const int CHUNK_DISTANCE = 8;
     entt::registry &registry;
     ChunkManager chunk_manager;
 };

@@ -19,9 +19,11 @@ public:
 
     void add_chunk(glm::ivec3 position);
 
-    void remove_chunk(glm::ivec2 position);
+    void remove_chunk(glm::ivec3 position);
 
     bool is_solid(glm::ivec3 position);
+
+    void center(glm::ivec3 position, int max_distance);
 
 private:
     int chunk_size = 0;
@@ -29,6 +31,8 @@ private:
     std::unordered_map<glm::ivec3, Chunk> chunks;
 
     void update_neighbor_chunks(glm::ivec3 position);
+
+    glm::ivec3 get_chunk_position(glm::ivec3 position) const;
 };
 
 

@@ -18,6 +18,7 @@ Chunk::Chunk(int size, glm::ivec3 in_world_position, entt::registry &registry) :
     transform_component.position = in_world_position;
 }
 
+
 void Chunk::generate() {
     srandom(time(nullptr));
     for (int x = 0; x < size; x++) {
@@ -29,6 +30,9 @@ void Chunk::generate() {
 
 
 void Chunk::update_mesh(ChunkManager &chunk_manager) {
+    if (!dirty_mesh) {
+        return;
+    }
     auto add_face = [](CUBE_FACE_IDX face, Mesh &mesh, int x_off_set, int y_off_set, int z_off_set) {
         auto start_idx = face * VERTEX_DATA_SIZE * 6;
         for (int i = start_idx; i < start_idx + VERTEX_DATA_SIZE * 6; i += VERTEX_DATA_SIZE * 3) {
@@ -69,12 +73,12 @@ void Chunk::update_mesh(ChunkManager &chunk_manager) {
         for (int y = 0; y <= max_height; y++) {
             if ((!chunk_manager.is_solid({in_world_position.x + x,
                                           in_world_position.y + y + 1,
-                                          in_world_position.z + z})) ) {
+                                          in_world_position.z + z}))) {
                 add_face(TOP, mesh, x, y, z);
             }
-            if (!chunk_manager.is_solid({in_world_position.x + x,
-                                         in_world_position.y + y - 1,
-                                         in_world_position.z + z})) {
+            if (y > MIN_HEIGHT && !chunk_manager.is_solid({in_world_position.x + x,
+                                                           in_world_position.y + y - 1,
+                                                           in_world_position.z + z})) {
                 add_face(BOTTOM, mesh, x, y, z);
             }
             if (!chunk_manager.is_solid({in_world_position.x + x + 1,
@@ -102,8 +106,21 @@ void Chunk::update_mesh(ChunkManager &chunk_manager) {
     mesh.create();
     auto &rendering_component = registry.get<RenderingComponent>(entity);
     rendering_component.mesh = mesh;
+    dirty_mesh = false;
 }
 
 bool Chunk::is_solid(glm::ivec3 position) {
-    return position.y <= height_map[std::make_pair(position.x, position.z)];
+    if (position.y < MIN_HEIGHT)
+        return false;
+    return position.y < height_map[std::make_pair(position.x, position.z)];
 }
+
+void Chunk::destroy() {
+    registry.destroy(entity);
+}
+
+void Chunk::invalidate_mesh() {
+    dirty_mesh = true;
+}
+
+

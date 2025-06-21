@@ -9,6 +9,9 @@
 
 struct CameraComponent {
     glm::mat4 view;
+    glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
+    float yaw = -90.0f;
+    float pitch = 0.0f;
 };
 
 #endif //MINECRAFT_CAMERACOMPONENT_HPP

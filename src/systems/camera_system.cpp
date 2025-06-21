@@ -13,6 +13,12 @@ CameraSystem::CameraSystem(entt::registry &registry) : System(registry) {
 }
 
 void CameraSystem::update(int elapsed) {
+    auto camera = *registry.view<CameraComponent>().begin();
+    auto &view = registry.get<CameraComponent>(camera).view;
+    auto &position = registry.get<CameraComponent>(camera).position;
+    auto &pitch = registry.get<CameraComponent>(camera).pitch;
+    auto &yaw = registry.get<CameraComponent>(camera).yaw;
+
     process_input(elapsed);
     front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
     front.y = sin(glm::radians(pitch));
@@ -20,14 +26,16 @@ void CameraSystem::update(int elapsed) {
     front = glm::normalize(front);
     right = glm::normalize(glm::cross(front, world_up));
     up = glm::normalize(glm::cross(right, front));
-
-    auto camera = *registry.view<CameraComponent>().begin();
-    auto &view = registry.get<CameraComponent>(camera).view;
     view = glm::lookAt(position, position + front, up);
 }
 
 void CameraSystem::process_input(int elapsed) {
     auto input = registry.get<InputComponent>(*registry.view<InputComponent>().begin());
+    auto camera = *registry.view<CameraComponent>().begin();
+    auto &position = registry.get<CameraComponent>(camera).position;
+    auto &pitch = registry.get<CameraComponent>(camera).pitch;
+    auto &yaw = registry.get<CameraComponent>(camera).yaw;
+
     if (input.move_forward) {
         position += front * (elapsed * movement_speed);
     }
@@ -47,7 +55,7 @@ void CameraSystem::process_input(int elapsed) {
         position.y -= elapsed * movement_speed;
     }
 
-    yaw   += input.look_delta_x * mouse_sensitivity;
+    yaw += input.look_delta_x * mouse_sensitivity;
     pitch += input.look_delta_y * mouse_sensitivity;
 
     if (pitch > 89.0f)
