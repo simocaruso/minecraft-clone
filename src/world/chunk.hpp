@@ -28,7 +28,7 @@ public:
 
 private:
     int size = 0;
-    static const int MAX_HEIGHT = 10;
+    static const int MAX_HEIGHT = 5;
     static const int MIN_HEIGHT = 0;
     std::map<std::pair<int, int>, int> height_map;
     std::bitset<4> pending;

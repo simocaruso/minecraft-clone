@@ -58,24 +58,45 @@ bool ChunkManager::exist(glm::ivec3 position) {
 void ChunkManager::center(glm::ivec3 position) {
     glm::ivec3 center = get_chunk_position(position);
     auto distance = chunk_distance * chunk_size;
-    if (chunks.contains({center.x - distance, center.y, center.z})) {
+    auto to_remove = (chunk_distance + 1) * chunk_size;
+    if (chunks.contains({center.x - to_remove, center.y, center.z})) {
+        for (int z = -to_remove; z <= to_remove; z += chunk_size) {
+            remove_chunk({center.x - to_remove, center.y, center.z + z});
+        }
+    }
+    if (!chunks.contains({center.x - distance, center.y, center.z})) {
         for (int z = -distance; z <= distance; z += chunk_size) {
-            remove_chunk({center.x - distance, center.y, center.z + z});
+            add_chunk({center.x - distance, center.y, center.z + z});
         }
     }
-    if (chunks.contains({center.x + distance, center.y, center.z})) {
+    if (chunks.contains({center.x + to_remove, center.y, center.z})) {
+        for (int z = -to_remove; z <= to_remove; z += chunk_size) {
+            remove_chunk({center.x + to_remove, center.y, center.z + z});
+        }
+    }
+    if (!chunks.contains({center.x + distance, center.y, center.z})) {
         for (int z = -distance; z <= distance; z += chunk_size) {
-            remove_chunk({center.x + distance, center.y, center.z + z});
+            add_chunk({center.x + distance, center.y, center.z + z});
         }
     }
-    if (chunks.contains({center.x, center.y, center.z - distance})) {
-        for (int x = -distance; x <= distance; x += chunk_size) {
-            remove_chunk({center.x + x, center.y, center.z - distance});
+    if (chunks.contains({center.x, center.y, center.z - to_remove})) {
+        for (int x = -to_remove; x <= to_remove; x += chunk_size) {
+            remove_chunk({center.x + x, center.y, center.z - to_remove});
         }
     }
-    if (chunks.contains({center.x, center.y, center.z + distance})) {
+    if (!chunks.contains({center.x, center.y, center.z - distance})) {
         for (int x = -distance; x <= distance; x += chunk_size) {
-            remove_chunk({center.x + x, center.y, center.z + distance});
+            add_chunk({center.x + x, center.y, center.z - distance});
+        }
+    }
+    if (chunks.contains({center.x, center.y, center.z + to_remove})) {
+        for (int x = -to_remove; x <= to_remove; x += chunk_size) {
+            remove_chunk({center.x + x, center.y, center.z + to_remove});
+        }
+    }
+    if (!chunks.contains({center.x, center.y, center.z + distance})) {
+        for (int x = -distance; x <= distance; x += chunk_size) {
+            add_chunk({center.x + x, center.y, center.z + distance});
         }
     }
 }
