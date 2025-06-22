@@ -19,7 +19,7 @@ public:
 
 private:
     const int CHUNK_SIZE = 16;
-    const int CHUNK_DISTANCE = 8;
+    const int CHUNK_DISTANCE = 6;
     entt::registry &registry;
     ChunkManager chunk_manager;
 };

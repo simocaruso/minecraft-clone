@@ -14,26 +14,30 @@
 
 class Mesh {
 public:
-    void add_vertex(VertexData vertex);
-
-    void add_triangle(VertexData vertex_1, VertexData vertex_2, VertexData vertex_3);
-
     void create();
 
-    void clear();
+    bool is_created();
+
+    void add_face(CUBE_FACE_IDX face, glm::ivec3 position);
+
+    void clear_cache();
 
     unsigned int get_VAO() const;
 
     int get_size();
 
 private:
-
     unsigned int VBO, VAO, EBO;
     std::vector<VertexData> vertexes;
     std::unordered_map<VertexData, int> vertex_idx;
     std::vector<std::array<int, 3>> triangles;
     std::vector<float> cache_gpu_shaped_vertexes;
     std::vector<int> cache_gpu_shaped_indexes;
+    bool m_is_created = false;
+
+    void add_vertex(VertexData vertex);
+
+    void add_triangle(VertexData vertex_1, VertexData vertex_2, VertexData vertex_3);
 
     std::vector<int> get_indexes();
 

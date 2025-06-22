@@ -6,6 +6,44 @@
 #include <iostream>
 #include "mesh.hpp"
 
+void Mesh::add_face(CUBE_FACE_IDX face, glm::ivec3 position) {
+    auto start_idx = face * VERTEX_DATA_SIZE * 6;
+    for (int i = start_idx; i < start_idx + VERTEX_DATA_SIZE * 6; i += VERTEX_DATA_SIZE * 3) {
+        add_triangle({VertexData{CUBE_VERTICES[i] + position.x,
+                                      CUBE_VERTICES[i + 1] + position.y,
+                                      CUBE_VERTICES[i + 2] + position.z,
+                                      CUBE_VERTICES[i + 3],
+                                      CUBE_VERTICES[i + 4],
+                                      CUBE_VERTICES[i + 5],
+                                      CUBE_VERTICES[i + 6],
+                                      CUBE_VERTICES[i + 7]}
+                          },
+                          {VertexData{CUBE_VERTICES[i + 8] + position.x,
+                                      CUBE_VERTICES[i + 9] + position.y,
+                                      CUBE_VERTICES[i + 10] + position.z,
+                                      CUBE_VERTICES[i + 11],
+                                      CUBE_VERTICES[i + 12],
+                                      CUBE_VERTICES[i + 13],
+                                      CUBE_VERTICES[i + 14],
+                                      CUBE_VERTICES[i + 15]}
+                          },
+                          {VertexData{CUBE_VERTICES[i + 16] + position.x,
+                                      CUBE_VERTICES[i + 17] + position.y,
+                                      CUBE_VERTICES[i + 18] + position.z,
+                                      CUBE_VERTICES[i + 19],
+                                      CUBE_VERTICES[i + 20],
+                                      CUBE_VERTICES[i + 21],
+                                      CUBE_VERTICES[i + 22],
+                                      CUBE_VERTICES[i + 23]}
+                          }
+        );
+    }
+}
+
+bool Mesh::is_created() {
+    return m_is_created;
+}
+
 void Mesh::add_triangle(VertexData vertex_1, VertexData vertex_2, VertexData vertex_3) {
     add_vertex(vertex_1);
     add_vertex(vertex_2);
@@ -47,10 +85,7 @@ std::vector<int> Mesh::get_indexes() {
     return cache_gpu_shaped_indexes;
 }
 
-void Mesh::clear() {
-    vertexes.clear();
-    vertex_idx.clear();
-    triangles.clear();
+void Mesh::clear_cache() {
     cache_gpu_shaped_vertexes.clear();
     cache_gpu_shaped_indexes.clear();
     if (VAO) {
@@ -61,8 +96,9 @@ void Mesh::clear() {
     }
     if (EBO) {
         glDeleteBuffers(1, &EBO);
-
     }
+
+    m_is_created = false;
 }
 
 unsigned int Mesh::get_VAO() const {
@@ -73,6 +109,8 @@ unsigned int Mesh::get_VAO() const {
 }
 
 void Mesh::create() {
+    clear_cache();
+
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
     glGenBuffers(1, &EBO);
@@ -97,6 +135,8 @@ void Mesh::create() {
     glEnableVertexAttribArray(2);
 
     glBindVertexArray(0);
+
+    m_is_created = true;
 }
 
 int Mesh::get_size() {

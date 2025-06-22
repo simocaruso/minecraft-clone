@@ -15,7 +15,7 @@
 
 class ChunkManager {
 public:
-    ChunkManager(int chunk_size, entt::registry &registry);
+    ChunkManager(int chunk_size, int chunk_distance, entt::registry &registry);
 
     void add_chunk(glm::ivec3 position);
 
@@ -23,16 +23,26 @@ public:
 
     bool is_solid(glm::ivec3 position);
 
-    void center(glm::ivec3 position, int max_distance);
+    bool exist(glm::ivec3 position);
+
+    void center(glm::ivec3 position);
+
+    void update();
 
 private:
     int chunk_size = 0;
+    int chunk_distance;
     entt::registry &registry;
     std::unordered_map<glm::ivec3, Chunk> chunks;
+
+    std::deque<glm::ivec3> to_be_created;
 
     void update_neighbor_chunks(glm::ivec3 position);
 
     glm::ivec3 get_chunk_position(glm::ivec3 position) const;
+
+    void process_pending_chunks();
+
 };
 
 
