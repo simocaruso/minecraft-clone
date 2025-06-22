@@ -8,6 +8,8 @@
 #include "../components/TransformComponent.hpp"
 #include "../components/RederingComponent.hpp"
 
+FastNoiseLite Chunk::noise;
+
 Chunk::Chunk(int size, glm::ivec3 in_world_position, entt::registry &registry) : size(size),
                                                                                  in_world_position(in_world_position),
                                                                                  registry(registry) {
@@ -20,10 +22,9 @@ Chunk::Chunk(int size, glm::ivec3 in_world_position, entt::registry &registry) :
 
 
 void Chunk::generate() {
-    srandom(time(nullptr));
     for (int x = 0; x < size; x++) {
         for (int z = 0; z < size; z++) {
-            height_map[std::make_pair(x, z)] = random() % MAX_HEIGHT;
+            height_map[std::make_pair(x, z)] = (int) ((noise.GetNoise((float) (in_world_position.x + x), (float) (in_world_position.z + z)) + 1) * MAX_HEIGHT);
         }
     }
 }

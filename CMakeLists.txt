@@ -9,6 +9,7 @@ add_library(glad STATIC include/glad.c
         src/components/InputComponent.hpp
         src/components/CameraComponent.hpp
         src/components/RederingComponent.hpp
+        include/fast_noise_lite/fast_noise_lite.hpp
 )
 target_include_directories(glad PUBLIC include)
 

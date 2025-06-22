@@ -11,6 +11,7 @@
 #include "../mesh.hpp"
 #include "glm/vec2.hpp"
 #include "entt/entt.hpp"
+#include "fast_noise_lite/fast_noise_lite.hpp"
 
 class ChunkManager;
 
@@ -28,13 +29,14 @@ public:
 
 private:
     int size = 0;
-    static const int MAX_HEIGHT = 5;
+    static const int MAX_HEIGHT = 10;
     static const int MIN_HEIGHT = 0;
     std::map<std::pair<int, int>, int> height_map;
     std::bitset<4> pending;
     glm::ivec3 in_world_position;
     entt::registry &registry;
     entt::entity entity;
+    static FastNoiseLite noise;
 
     void generate();
 
