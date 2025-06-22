@@ -3,7 +3,7 @@
 //
 
 #include <thread>
-#include "minecraft.hpp"
+#include "minecraft_clone.hpp"
 #include "timer.hpp"
 #include "iostream"
 #include "systems/rendering_system.hpp"

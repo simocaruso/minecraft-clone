@@ -2,8 +2,8 @@
 // Created by simone on 07/06/25.
 //
 
-#ifndef MINECRAFT_MINECRAFT_HPP
-#define MINECRAFT_MINECRAFT_HPP
+#ifndef MINECRAFT_MINECRAFT_CLONE_HPP
+#define MINECRAFT_MINECRAFT_CLONE_HPP
 
 #include <memory>
 #include <vector>
@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif //MINECRAFT_MINECRAFT_HPP
+#endif //MINECRAFT_MINECRAFT_CLONE_HPP

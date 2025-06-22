@@ -1,5 +1,5 @@
 #include <iostream>
-#include "minecraft.hpp"
+#include "minecraft_clone.hpp"
 
 int main() {
     Minecraft().start();

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.26)
-project(minecraft)
+project(minecraft_clone)
 
 set(CMAKE_CXX_STANDARD 20)
 
@@ -16,9 +16,9 @@ target_include_directories(glad PUBLIC include)
 # Find and link GLFW (you must install it or add it yourself)
 find_package(glfw3 REQUIRED)
 
-add_executable(minecraft src/main.cpp
-        src/minecraft.cpp
-        src/minecraft.hpp
+add_executable(minecraft_clone src/main.cpp
+        src/minecraft_clone.cpp
+        src/minecraft_clone.hpp
         src/timer.cpp
         src/timer.hpp
         src/systems/system.hpp
@@ -63,8 +63,8 @@ add_custom_target(
 
 add_dependencies(${PROJECT_NAME} CopyRes)
 
-target_include_directories(minecraft PRIVATE
+target_include_directories(minecraft_clone PRIVATE
         include
 )
 
-target_link_libraries(minecraft PRIVATE glad glfw)
+target_link_libraries(minecraft_clone PRIVATE glad glfw)
